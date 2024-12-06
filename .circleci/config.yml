@@ -1,0 +1,65 @@
+version: 1.0
+
+jobs:
+  build:
+    docker:
+      - image: cimg/node:16.14.0
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies for backend
+          command: |
+            npm run api:install
+      - run:
+          name: Build API
+          command: |
+            npm run api:build
+      - run:
+          name: Install dependencies for frontend
+          command: |
+            npm run frontend:install
+      - run:
+          name: Build frontend
+          command: |
+            npm run frontend:build
+
+  test:
+    docker:
+      - image: cimg/node:16.14.0
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies for backend
+          command: |
+            npm run api:install
+      - run:
+          name: Run tests for backend
+          command: |
+            npm run api:test
+
+  deploy:
+    docker:
+      - image: cimg/node:16.14.0
+    steps:
+      - checkout
+      - run:
+          name: Deploy API to Elastic Beanstalk
+          command: |
+            cd fullstack_be
+            eb deploy
+      - run:
+          name: Deploy frontend to S3
+          command: |
+            cd fullstack_fe
+            aws s3 sync ./dist/ s3://thq4webapp --delete
+          
+workflows:
+  version: 2
+  build_deploy:
+    jobs:
+      - build
+      - test
+      - deploy:
+          requires:
+            - build
+            - test

@@ -1,0 +1,49 @@
+<div class="checkout-container">
+    <h1 class="checkout-title">Checkout</h1>
+
+    <form class="checkout-form" #checkoutForm="ngForm" (ngSubmit)="checkout()">
+        <!-- User Information -->
+        <div class="form-group">
+            <label for="username">Name:</label>
+            <input type="text" id="username" class="form-input" placeholder="Enter your full name" required
+                minlength="5" name="fullname" [(ngModel)]="paymentInformation.fullname" #fullname="ngModel" value="" (ngModelChange)="trimName()"/>
+            <div *ngIf="fullname.invalid && fullname.touched" class="error">
+                <p *ngIf="fullname.errors?.required">Name is required.</p>
+                <p *ngIf="fullname.errors?.minlength">Name must be at least 5 characters long.</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="address">Phone number:</label>
+            <textarea id="phone" class="form-input" rows="3" placeholder="Enter your phone number" required minlength="9"
+                name="phone" [(ngModel)]="paymentInformation.phone" #phone="ngModel"></textarea>
+            <div *ngIf="phone.invalid && phone.touched" class="error">
+                <p *ngIf="phone.errors?.required">Phone number is required.</p>
+                <p *ngIf="phone.errors?.minlength">Phone number must be at least 9 characters long.</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="address">Address:</label>
+            <textarea id="address" class="form-input" rows="3" placeholder="Enter your address" required minlength="10"
+                name="address" [(ngModel)]="paymentInformation.address" #address="ngModel"></textarea>
+            <div *ngIf="address.invalid && address.touched" class="error">
+                <p *ngIf="address.errors?.required">Address is required.</p>
+                <p *ngIf="address.errors?.minlength">Address must be at least 10 characters long.</p>
+            </div>
+        </div>
+
+        <!-- Payment Details -->
+        <div class="form-group">
+            <label for="paymentMethod">Payment Method:</label>
+            <select id="paymentMethod" class="form-input" required name="paymentMethod" [(ngModel)]="paymentInformation.paymentMethod" >
+                <option value="transfer">Transfer Payment</option>
+                <option value="cash">Cash Payment</option>
+            </select>
+        </div>
+
+        <button type="submit" class="checkout-btn" [disabled]="checkoutForm.invalid">
+            Submit Payment
+        </button>
+    </form>
+</div>

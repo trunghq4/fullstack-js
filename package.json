@@ -1,0 +1,13 @@
+{
+  "name": "store-project",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "api:install": "cd fullstack_be && npm install",
+    "api:build": "cd fullstack_be && npm run build",
+    "api:test": "cd fullstack_be && npm run test",
+    "frontend:install": "cd fullstack_fe && npm install",
+    "frontend:build": "cd fullstack_fe && npm run build",
+    "frontend:test": "cd fullstack_fe && npm run test"
+  }
+}

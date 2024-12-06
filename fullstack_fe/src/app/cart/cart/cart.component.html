@@ -1,0 +1,28 @@
+<div class="cart-container">
+    <h1 class="cart-title">Shopping Cart</h1>
+    <div *ngIf="products.length > 0; else emptyCart" class="cart-items">
+        <div *ngFor="let item of products" class="cart-item" (click)="viewProductDetail(item.id)">
+            <img [src]="item.url" alt="{{ item.name }}" class="cart-item-image" />
+            <div class="cart-item-details">
+                <h2 class="cart-item-name">{{ item.name }} x {{ item.quantity }}</h2>
+                <p class="cart-item-price">Price: ${{ item.price }}</p>
+            </div>
+            <button class="remove-item-btn" (click)="removeFromCart(item.id)">Remove</button>
+        </div>
+        <div class="cart-footer">
+            <p class="cart-total">Total: ${{ total }}</p>
+            <button class="clear-cart-btn" (click)="clearCart()">Clear Cart</button>
+            <button class="checkout-btn" (click)="checkout()">Checkout</button>
+        </div>
+    </div>
+
+    <ng-template #emptyCart>
+        <p class="empty-cart-message">Your cart is empty.</p>
+    </ng-template>
+</div>
+<div *ngIf="showCheckout" class="checkout-section">
+    <app-checkout [paymentInformation]="paymentInformation"
+    (openPopup)="openConfirmPopup()" (trimNameStr)="trimName()"></app-checkout>
+</div>
+<app-confirm-popup *ngIf="showConfirmation" [products]="products" [paymentInformation]="paymentInformation"
+    (closePopup)="closeConfirmPopup()"></app-confirm-popup>

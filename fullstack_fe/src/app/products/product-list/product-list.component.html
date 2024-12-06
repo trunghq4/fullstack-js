@@ -1,0 +1,20 @@
+<div class="product-list" *ngIf="products">
+    <div *ngFor="let product of products" class="product-item" (click)="viewProductDetail(product.id)">
+        <img [src]="product.url" alt="{{ product.name }}" class="product-image" />
+        <h2 class="product-name">{{ product.name }}</h2>
+        <p class="product-price">${{ product.price }}</p>
+        <button class="add-to-cart-btn" (click)="openQuantityPopup(product); $event.stopPropagation()">Add to
+            Cart</button>
+    </div>
+</div>
+
+<div *ngIf="selectedProduct" class="quantity-popup">
+    <div class="popup-content">
+        <h3>Select Quantity</h3>
+        <input type="number" min="1" [(ngModel)]="quantity" class="quantity-input" />
+        <div class="popup-actions">
+            <button class="confirm-btn" (click)="confirmAddToCart()">Confirm</button>
+            <button class="cancel-btn" (click)="closeQuantityPopup()">Cancel</button>
+        </div>
+    </div>
+</div>

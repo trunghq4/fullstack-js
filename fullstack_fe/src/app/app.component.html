@@ -1,0 +1,13 @@
+<div class="layout">
+    <app-header></app-header>
+
+    <div *ngIf="showNotification" class="notification-modal">
+        <div class="notification-content">
+            <p>{{ msg }}</p>
+        </div>
+    </div>
+
+    <main>
+        <router-outlet></router-outlet>
+    </main>
+</div>
